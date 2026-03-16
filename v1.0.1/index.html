@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daddy Tuner v1.0.1</title>
+    <link rel="manifest" href="../manifest.json">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#0f172a">
+    <link rel="stylesheet" href="app.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Daddy Tuner</h1>
+            <p class="subtitle">to yein</p>
+        </header>
+
+        <main class="tuner-card">
+            <div class="meter-container">
+                <div class="meter-scale"></div>
+                <div class="meter-center"></div>
+                <div id="meter-pointer"></div>
+            </div>
+
+            <div class="note-display-container">
+                <div id="note-display">-</div>
+                <div id="freq-display">0.00 Hz</div>
+            </div>
+
+            <div class="visualizer-container">
+                <canvas id="viz-canvas"></canvas>
+            </div>
+        </main>
+
+        <div class="controls">
+            <button id="start-btn">START TUNING</button>
+        </div>
+    </div>
+
+    <script type="module" src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('../sw.js');
+        }
+    </script>
+</body>
+</html>

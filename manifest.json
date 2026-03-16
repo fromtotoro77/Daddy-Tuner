@@ -1,15 +1,15 @@
 {
-  "name": "Daddy Tuner",
-  "short_name": "Daddy Tuner",
-  "description": "Premium Guitar Tuner PWA",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "Daddy Tuner v1.0.1",
+  "short_name": "Daddy v1.0.1",
+  "description": "Premium Guitar Tuner PWA - to yein",
+  "start_url": "/Daddy-Tuner/index.html",
+  "scope": "/Daddy-Tuner/",
   "display": "standalone",
   "background_color": "#0f172a",
   "theme_color": "#0f172a",
   "icons": [
     {
-      "src": "v1.0.0/icon-512.png",
+      "src": "v1.0.1/icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
