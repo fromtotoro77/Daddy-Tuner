@@ -1,50 +1,53 @@
-// 저장해 둔 파일(manifest 등)을 바꿨으면 이름 끝을 바꿔야 휴대폰에 새 파일이 간다
-const CACHE_NAME = 'daddy-tuner-v1.0.2-2';
+// 루트가 곧 배포본이다. 버전 폴더(v1.0.x)는 보관용 스냅샷일 뿐 여기서 쓰지 않는다.
+// 파일을 바꾸면 CACHE_NAME 끝 번호를 올린다.
+const CACHE_NAME = 'daddy-tuner-v1.0.3';
+
 const ASSETS = [
   './',
   './index.html',
+  './app.css',
+  './app.js',
+  './visualizer.js',
   './manifest.json',
-  './v1.0.2/index.html',
-  './v1.0.2/app.css',
-  './v1.0.2/app.js',
-  './v1.0.2/visualizer.js',
-  './v1.0.2/icon-512.png'
+  './icon-192.png',
+  './icon-512.png',
+  './icon-maskable-512.png',
 ];
 
 self.addEventListener('install', (e) => {
   self.skipWaiting();
   e.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS).catch(error => {
-        console.error('Cache addAll failed:', error);
-      });
-    })
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS).catch((err) => {
+      console.error('캐시 등록 실패:', err);
+    })),
   );
 });
 
 self.addEventListener('activate', (e) => {
-  e.waitUntil(
-    Promise.all([
-      self.clients.claim(),
-      caches.keys().then((keys) => {
-        return Promise.all(
-          keys.filter((key) => key !== CACHE_NAME).map((key) => caches.delete(key))
-        );
-      })
-    ])
-  );
+  e.waitUntil(Promise.all([
+    self.clients.claim(),
+    caches.keys().then((keys) => Promise.all(
+      keys.filter((k) => k !== CACHE_NAME).map((k) => caches.delete(k)),
+    )),
+  ]));
 });
 
+// 네트워크 우선, 실패하면 캐시.
+// 캐시 우선으로 두면 파일을 고쳐도 예전 화면이 계속 떠서 갱신이 안 된 것처럼 보인다.
 self.addEventListener('fetch', (e) => {
-  // 화면(HTML)은 인터넷 먼저: 저장된 옛 index.html 이 옛 버전 폴더로 보내는 일을 막는다.
-  // 인터넷이 안 되면 저장본을 쓴다.
-  if (e.request.mode === 'navigate') {
-    e.respondWith(
-      fetch(e.request).catch(() => caches.match(e.request))
-    );
-    return;
-  }
+  if (e.request.method !== 'GET') return;
+  if (new URL(e.request.url).origin !== self.location.origin) return;
+
   e.respondWith(
-    caches.match(e.request).then((res) => res || fetch(e.request))
+    fetch(e.request)
+      .then((res) => {
+        if (res && res.ok) {
+          const copy = res.clone();
+          caches.open(CACHE_NAME).then((c) => c.put(e.request, copy));
+        }
+        return res;
+      })
+      .catch(() => caches.match(e.request, { ignoreSearch: true })
+        .then((hit) => hit || caches.match('./index.html'))),
   );
 });
