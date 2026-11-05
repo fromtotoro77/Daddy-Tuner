@@ -235,6 +235,7 @@ header { position: relative; }
 }
 
 #settings-btn:active { opacity: .7; }
+#settings-btn[hidden] { display: none; }
 
 #settings-panel {
     padding: 1rem;
@@ -244,14 +245,6 @@ header { position: relative; }
 }
 
 #settings-panel[hidden] { display: none; }
-
-#install-note {
-    font-size: 0.78rem;
-    line-height: 1.6;
-    opacity: .45;
-}
-
-#install-note[hidden] { display: none; }
 
 #install-btn {
     width: 100%;

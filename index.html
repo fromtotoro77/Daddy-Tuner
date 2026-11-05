@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Daddy Tuner</title>
-    <link rel="manifest" href="manifest.json?v=1.0.4">
+    <link rel="manifest" href="manifest.json?v=1.0.5">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-title" content="Daddy Tuner">
@@ -12,7 +12,7 @@
     <meta name="theme-color" content="#0f172a">
     <link rel="apple-touch-icon" href="icon-512.png">
     <link rel="icon" href="icon-192.png">
-    <link rel="stylesheet" href="app.css?v=1.0.4">
+    <link rel="stylesheet" href="app.css?v=1.0.5">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;800;900&display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 <body>
     <div class="app-container">
         <header>
-            <button id="settings-btn" aria-label="설정">
+            <button id="settings-btn" aria-label="설정" hidden>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                     stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                     <circle cx="12" cy="12" r="3" />
@@ -33,7 +33,6 @@
 
         <div id="settings-panel" hidden>
             <button id="install-btn">홈 화면에 앱으로 설치</button>
-            <p id="install-note">이미 설치되어 있거나 이 브라우저에서는 설치할 수 없습니다.</p>
         </div>
 
         <main class="tuner-card">
@@ -58,21 +57,22 @@
         </div>
     </div>
 
-    <script type="module" src="app.js?v=1.0.4"></script>
+    <script type="module" src="app.js?v=1.0.5"></script>
     <script>
         // 브라우저 메뉴로 설치하게 두면 바로가기가 잘못 만들어지고,
         // 그러면 브라우저가 '설치됨'으로 기록해 진짜 설치를 막는다. (개발 정책 5항)
         (function () {
             var deferred = null;
             var btn = document.getElementById('install-btn');
-            var note = document.getElementById('install-note');
             var panel = document.getElementById('settings-panel');
             var gear = document.getElementById('settings-btn');
 
+            // 할 수 있는 게 없으면 톱니바퀴도 보이지 않는다.
+            // 설치하고 나면 그대로 사라진다. 나중에 다른 설정이 생기면 그때 항상 보이게 한다.
             function paint() {
                 var ok = !!deferred;
-                btn.hidden = !ok;
-                note.hidden = ok;
+                gear.hidden = !ok;
+                if (!ok) panel.hidden = true;
             }
             paint();
 
@@ -99,14 +99,13 @@
                 e.userChoice.then(function (c) {
                     if (c.outcome !== 'accepted') deferred = e;
                     paint();
-                    if (c.outcome === 'accepted') panel.hidden = true;
                 });
             });
         })();
     </script>
     <script>
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js?v=1.0.4');
+            navigator.serviceWorker.register('sw.js?v=1.0.5');
         }
     </script>
 </body>
