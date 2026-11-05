@@ -1,4 +1,5 @@
-const CACHE_NAME = 'daddy-tuner-v1.0.2';
+// 저장해 둔 파일(manifest 등)을 바꿨으면 이름 끝을 바꿔야 휴대폰에 새 파일이 간다
+const CACHE_NAME = 'daddy-tuner-v1.0.2-2';
 const ASSETS = [
   './',
   './index.html',
