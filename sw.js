@@ -1,6 +1,6 @@
 // 루트가 곧 배포본이다. 버전 폴더(v1.0.x)는 보관용 스냅샷일 뿐 여기서 쓰지 않는다.
 // 파일을 바꾸면 CACHE_NAME 끝 번호를 올린다.
-const CACHE_NAME = 'daddy-tuner-v1.0.3';
+const CACHE_NAME = 'daddy-tuner-v1.0.4';
 
 const ASSETS = [
   './',

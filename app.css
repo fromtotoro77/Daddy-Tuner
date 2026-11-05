@@ -215,10 +215,46 @@ h1 {
 
 
 /* 설치는 브라우저 메뉴가 아니라 앱 안에서 한다. (개발 정책 5항)
-   설치할 수 없는 상태에서는 아예 나타나지 않는다. */
+   다만 START 옆에 두면 잘못 누르기 쉬우므로, 우측 위 설정 아이콘 뒤에 둔다. */
+header { position: relative; }
+
+#settings-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0;
+    background: none;
+    color: var(--text-color);
+    opacity: .28;
+    cursor: pointer;
+}
+
+#settings-btn:active { opacity: .7; }
+
+#settings-panel {
+    padding: 1rem;
+    border-radius: 1rem;
+    border: 1px solid var(--glass-border);
+    background: var(--glass-bg);
+}
+
+#settings-panel[hidden] { display: none; }
+
+#install-note {
+    font-size: 0.78rem;
+    line-height: 1.6;
+    opacity: .45;
+}
+
+#install-note[hidden] { display: none; }
+
 #install-btn {
-    flex: 0 0 100%;
-    margin-top: 1rem;
+    width: 100%;
     padding: 0.75rem;
     border-radius: 999px;
     border: 1px solid var(--glass-border);
