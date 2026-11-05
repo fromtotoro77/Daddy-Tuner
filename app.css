@@ -216,42 +216,21 @@ h1 {
 
 /* 설치는 브라우저 메뉴가 아니라 앱 안에서 한다. (개발 정책 5항)
    다만 START 옆에 두면 잘못 누르기 쉬우므로, 우측 위 설정 아이콘 뒤에 둔다. */
-header { position: relative; }
-
-#settings-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 0;
-    background: none;
-    color: var(--text-color);
-    opacity: .28;
-    cursor: pointer;
-}
-
-#settings-btn:active { opacity: .7; }
-#settings-btn[hidden] { display: none; }
-
-#settings-panel {
-    padding: 1rem;
-    border-radius: 1rem;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
-}
-
-#settings-panel[hidden] { display: none; }
-
+/* 설치 띠. Daddy 시리즈 공통 - 화면 맨 위, 전체 너비.
+   설치가 목적이니 숨기지 않는다. 설치하고 나면 사라진다.
+   START 같은 동작 단추와 멀리 떨어뜨려 잘못 누르지 않게 한다. */
 #install-btn {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 999px;
-    border: 1px solid var(--glass-border);
-    background: var(--glass-bg);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+    padding: 0.7rem 1rem;
+    padding-top: max(0.7rem, env(safe-area-inset-top));
+    border: 0;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(8px);
     color: var(--text-color);
     font-size: 0.85rem;
     font-weight: 700;
@@ -259,5 +238,5 @@ header { position: relative; }
     cursor: pointer;
 }
 
-#install-btn:active { background: rgba(255, 255, 255, 0.1); }
+#install-btn:active { background: rgba(255, 255, 255, 0.14); }
 #install-btn[hidden] { display: none; }
